@@ -1,7 +1,8 @@
 // TODO: Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require("fs");
-const axios = require("axios");
+const path = require("path");
+const generateMarkdown = require('./utils/generateMarkdown')
 // TODO: Create an array of questions for user input
 const questions = [
     
@@ -9,11 +10,6 @@ const questions = [
         type: "input",
         name: "title",
         message: "What is the title of your project?"
-    },
-    {
-        type: "input",
-        name: "badge",
-        message: "Please provide the badge links that you want."
     },
     {
         type: "input",
@@ -58,10 +54,75 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(fileName, data) {
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data)
+}
+
+const generateMarkdown = (data) =>
+`[![License](https://img.shields.io/badge/License-${data.license}-blue.svg)](${data.licenseLink})
+# ${data.title} 
+### Description:
+        ${data.description}
+     
+## Table of Contents:
+* [Installation](#installation:)
+* [Usage](#usage:)
+* [License](#license:)
+* [Contrubting](#contributing:)
+* [Tests](#tests:)
+* [Questions](#questions:)
+* [Username](#username:)
+* [Repo](#repo:)
+### Installation:
+        ${data.installation}
+     
+### Usage:
+        ${data.usage}
+     
+### License:
+        Click the ${data.license} badge at the top of the page to learn more about the license coverage of this application.
+     
+### Contributing:
+        ${data.contribution}
+     
+### Tests:
+        ${data.test}
+     
+### Questions?
+GitHib Profile Link: github.com/${data.github}
+        
+Please feel free to reach me at ${data.email} 
+** Link to Video Walkthrough ** https://drive.google.com/file/d/1QHfb5mYF4jpyGi2OcqRTfEneKx9D2lUE/view
+    `;
+
+module.exports = generateMarkdown;
+
 
 // TODO: Create a function to initialize app
-function init() {}
-
-// Function call to initialize app
+function init() {
+    inquirer.prompt(questions).then((inquirerResponses) => {
+        switch(inquirerResponses.license) {
+            case 'MIT':
+                inquirerResponses.licenseLink = 'https://opensource.org/licenses/MIT';
+                break;
+            case 'Apache2.0':
+                inquirerResponses.licenseLink = 'https://opensource.org/licenses/Apache-2.0';
+                break;
+            case 'GPLv3':
+                inquirerResponses.licenseLink = 'https://opensource.org/licenses/gpl-3.0';
+                break;
+            case 'BSD3':
+                inquirerResponses.licenseLink = 'https://opensource.org/licenses/bsd-3'; 
+                break;
+            case 'MPL2.0':
+                inquirerResponses.licenseLink = 'https://opensource.org/licenses/MPL-2.0';
+                break;
+            default: ;
+        }
+        console.log("generating your readme");
+        writeToFile('readMe.md', generateMarkdown(inquirerResponses))
+    })
+    .catch((err) => console.error(err));
+}
+//Function to initialize app
 init();
