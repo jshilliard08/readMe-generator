@@ -1,6 +1,6 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
-const util = require("util");
+//const util = require("util");
 const inquirer = require('inquirer');
 const generateReadMe = require('./utility/generateReadMe');
 const writeFile = utility.promisfy(fs.writeFile);
@@ -32,13 +32,7 @@ function promptUser(){
         type: "input",
         name: "license",
         message: "Please choose the project license."
-        choices: [
-            'MIT',
-            'APACHE',
-            'MIT',
-            'MOZILLA',
-            'NONE'
-        ]
+        
     },
     {
         type: "input",
