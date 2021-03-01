@@ -57,48 +57,7 @@ const questions = [
 function writeToFile(fileName, data) {
     return fs.writeFileSync(path.join(process.cwd(), fileName), data)
 }
-
-const generateMarkdown = (data) =>
-`[![License](https://img.shields.io/badge/License-${data.license}-blue.svg)](${data.licenseLink})
-# ${data.title} 
-### Description:
-        ${data.description}
-     
-## Table of Contents:
-* [Installation](#installation:)
-* [Usage](#usage:)
-* [License](#license:)
-* [Contrubting](#contributing:)
-* [Tests](#tests:)
-* [Questions](#questions:)
-* [Username](#username:)
-* [Repo](#repo:)
-### Installation:
-        ${data.installation}
-     
-### Usage:
-        ${data.usage}
-     
-### License:
-        Click the ${data.license} badge at the top of the page to learn more about the license coverage of this application.
-     
-### Contributing:
-        ${data.contribution}
-     
-### Tests:
-        ${data.test}
-     
-### Questions?
-GitHib Profile Link: github.com/${data.github}
-        
-Please feel free to reach me at ${data.email} 
-** Link to Video Walkthrough ** https://drive.google.com/file/d/1QHfb5mYF4jpyGi2OcqRTfEneKx9D2lUE/view
-    `;
-
-module.exports = generateMarkdown;
-
-
-// TODO: Create a function to initialize app
+//Function to initialize app
 function init() {
     inquirer.prompt(questions).then((inquirerResponses) => {
         switch(inquirerResponses.license) {
@@ -124,5 +83,4 @@ function init() {
     })
     .catch((err) => console.error(err));
 }
-//Function to initialize app
 init();
