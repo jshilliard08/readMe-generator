@@ -1,10 +1,12 @@
 // TODO: Include packages needed for this application
-const inquirer = require("inquirer");
-const fs = require("fs");
-const path = require("path");
-const generateMarkdown = require('./utils/generateMarkdown')
+const fs = require('fs');
+const util = require("util");
+const inquirer = require('inquirer');
+const generateReadMe = require('./utility/generateReadMe');
+const writeFile = utility.promisfy(fs.writeFile);
 // TODO: Create an array of questions for user input
-const questions = [
+function promptUser(){
+	return inquirer.prompt([
     
     {
         type: "input",
@@ -29,7 +31,14 @@ const questions = [
     {
         type: "input",
         name: "license",
-        message: "Please provide the project license or your badge link."
+        message: "Please choose the project license."
+        choices: [
+            'MIT',
+            'APACHE',
+            'MIT',
+            'MOZILLA',
+            'NONE'
+        ]
     },
     {
         type: "input",
@@ -51,36 +60,22 @@ const questions = [
         name: "repo",
         message: "Please provide your repo link."
     },
-];
+])};
+
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data)
+async function init(){
+	try {
+		// Asks questions and grabs responses
+		const data = await promptUser();
+		const writeReadMe = generateReadMe(data);
+
+		// Write ReadMe.md and send to a folder
+		await writeFile('./product/README.md', writeReadMe);
+		console.log(' Generated to README.md');
+	} catch(err) {
+		console.log(err);
+	}
 }
-//Function to initialize app
-function init() {
-    inquirer.prompt(questions).then((inquirerResponses) => {
-        switch(inquirerResponses.license) {
-            case 'MIT':
-                inquirerResponses.licenseLink = 'https://opensource.org/licenses/MIT';
-                break;
-            case 'Apache2.0':
-                inquirerResponses.licenseLink = 'https://opensource.org/licenses/Apache-2.0';
-                break;
-            case 'GPLv3':
-                inquirerResponses.licenseLink = 'https://opensource.org/licenses/gpl-3.0';
-                break;
-            case 'BSD3':
-                inquirerResponses.licenseLink = 'https://opensource.org/licenses/bsd-3'; 
-                break;
-            case 'MPL2.0':
-                inquirerResponses.licenseLink = 'https://opensource.org/licenses/MPL-2.0';
-                break;
-            default: ;
-        }
-        console.log("generating your readme");
-        writeToFile('readMe.md', generateMarkdown(inquirerResponses))
-    })
-    .catch((err) => console.error(err));
-}
+
 init();

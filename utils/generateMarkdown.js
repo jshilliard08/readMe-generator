@@ -1,44 +1,40 @@
 // TODO: Create a function to generate markdown for README
-function generateMarkdown(data) {
-  return ` 
-  [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](https://www.contributor-covenant.org/version/2/0/code_of_conduct/)
+function generateReadMe(data) {
+  return `
+  <h1 align="center">${data.projectTitle} </h1>
+  ![badge](https://img.shields.io/badge/license-${answers.license}-blue)<br />
+    ##Description
+    ${data.description}
+      ##Table of Contents
+      - [Description](#description)
+      - [Installation](#installation)
+      - [Usage](#usage)
+      - [License](#license)
+      - [Contributing](#contributing)
+      - [Tests](#tests)
+      - [Questions](#questions)
+      ##Installation
+      ${data.installation}
+      ##Usage
+      ${data.usage}
+      ##License
+      ${data.license}
+      This project has a  ${data.license} license.
+      ##Contributing
+      ${data.contributors}
+      ##Tests
+      ${data.tests}
+      ##Questions
+      ${data.questions}
+      
+    ##Github Username
+    <br/>
+      Follow me on Github: [${data.username}] ((https://github.com/${data.username}))
+    ##Github Email
+    Feel free to reachout via: ${data.email}
+    
+  README created with [README-Generator] (https://github.com/nme22/README-Generator)
+    `;
+  }
   
-  # **${data.title}**
-  # Table of Contents
-  * [Project Description](#project-description)
-  * [Installation](#installation)
-  * [Usage](#usage)
-  * [Tests](#tests)
-  * [License](#license)
-  * [Contributing](#contributing)
-  * [Username](#username)
-  * [Repo](#repo)
-  * [Questions](#questions)
-  # Project Description
-  ${data.description}
-  
-  # Installation
-  ${data.installation}
-  # Usage
-  ${data.usage}
-  # License
-  ${data.license}
-  # Contributing
-  ${data.contributing}
-  #Test
-  ${data.test}
-  #Username
-  ${data.username}
-  #Repo
-  - [Project Repo](${data.repo})
-## GitHub
-![Image of me](${githubInfo.githubImage})
-- ${githubInfo.name}
-- [GitHub Profile](${githubInfo.profile})
-- <${githubInfo.email}>
-`;
-}
-
-
-
-module.exports = generateMarkdown;
+  module.exports = generateReadMe;
