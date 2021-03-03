@@ -70,6 +70,7 @@ async function init(){
 	} catch(err) {
 		console.log(err);
 	}
+    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
 }
 
 init();
