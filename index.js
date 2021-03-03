@@ -2,8 +2,8 @@
 const fs = require('fs');
 //const util = require("util");
 const inquirer = require('inquirer');
-const generateReadMe = require('./utility/generateReadMe');
-const writeFile = utility.promisfy(fs.writeFile);
+const generateReadMe = require('./utils/generateMarkdown');
+//const writeFile = utils.promisfy(fs.writeFile);
 // TODO: Create an array of questions for user input
 function promptUser(){
 	return inquirer.prompt([

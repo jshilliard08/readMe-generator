@@ -2,7 +2,7 @@
 function generateReadMe(data) {
   return `
   <h1 align="center">${data.projectTitle} </h1>
-  ![badge](https://img.shields.io/badge/license-${answers.license}-blue)<br />
+  ![badge](https://img.shields.io/badge/license-${data.license}-blue)<br />
     ##Description
     ${data.description}
       ##Table of Contents
