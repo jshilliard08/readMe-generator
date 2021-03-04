@@ -1,12 +1,12 @@
 // TODO: Include packages needed for this application
 const fs = require('fs');
-//const util = require("util");
+const util = require("util");
 const inquirer = require('inquirer');
 const generateReadMe = require('./utils/generateMarkdown');
 //const writeFile = utils.promisfy(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 // TODO: Create an array of questions for user input
-function promptUser(){
-	return inquirer.prompt([
+const questions = [
     
     {
         type: "input",
@@ -54,23 +54,43 @@ function promptUser(){
         name: "repo",
         message: "Please provide your repo link."
     },
-])};
+]
 
 
-// TODO: Create a function to write README file
-async function init(){
-	try {
-		// Asks questions and grabs responses
-		const data = await promptUser();
-		const writeReadMe = generateReadMe(data);
+// function to prompt user - returns answers object
+const promptUser = () => {
+    return inquirer
+        .prompt(questions);
+}
 
-		// Write ReadMe.md and send to a folder
-		await writeFile('./product/README.md', writeReadMe);
-		console.log(' Generated to README.md');
-	} catch(err) {
-		console.log(err);
-	}
-    return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+
+// function to write README file
+const writeToFile = (fileName, data) => {
+    return writeFileAsync(fileName, data);
+}
+
+
+// function to initialize program
+const init = async () => {
+    try {
+        console.log("Welcome to the README generator.\nPlease answer the following questions:")
+
+        // ask user for answers to questions
+        const answers = await promptUser();
+
+        // create markdown content from user answers
+        const fileContent = generateReadMe(answers);
+
+        // write markdown content to README.md file
+        await writeToFile("./output/README.md", fileContent);
+
+        // notify user that file has been written
+        console.log("README.md created in output folder.");
+
+    } catch (err) {
+        console.error("Error creating README. File not created.");
+        console.log(err);
+    }
 }
 
 init();

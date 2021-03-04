@@ -1,40 +1,42 @@
-// TODO: Create a function to generate markdown for README
-function generateReadMe(data) {
-  return `
-  <h1 align="center">${data.projectTitle} </h1>
-  ![badge](https://img.shields.io/badge/license-${data.license}-blue)<br />
-    ##Description
-    ${data.description}
-      ##Table of Contents
-      - [Description](#description)
-      - [Installation](#installation)
-      - [Usage](#usage)
-      - [License](#license)
-      - [Contributing](#contributing)
-      - [Tests](#tests)
-      - [Questions](#questions)
-      ##Installation
-      ${data.installation}
-      ##Usage
-      ${data.usage}
-      ##License
-      ${data.license}
-      This project has a  ${data.license} license.
-      ##Contributing
-      ${data.contributors}
-      ##Tests
-      ${data.tests}
-      ##Questions
-      ${data.questions}
-      
-    ##Github Username
-    <br/>
-      Follow me on Github: [${data.username}] ((https://github.com/${data.username}))
-    ##Github Email
-    Feel free to reachout via: ${data.email}
-    
-  README created with [README-Generator] (https://github.com/nme22/README-Generator)
-    `;
-  }
-  
-  module.exports = generateReadMe;
+const licenseBadgeLinks = require("./license.js");
+
+// function to generate markdown for README
+function generateMarkdown(data) {
+
+  // set url for license badge
+  data.licenseBadge = licenseBadgeLinks[data.license];
+
+  // return markdown content
+  return `# ${data.title}
+${data.licenseBadge}
+## Description
+${data.description}
+## Table of Contents
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
+## Installation
+To install dependencies, run the following:
+\`
+${data.installation}
+\`
+## Usage
+${data.usage}
+## License
+This repository is licensed under the ${data.license} license.
+## Contributing
+${data.contribute}
+## Tests
+To run tests, run the following:
+\`
+${data.tests}
+\`
+## Questions
+Questions about this repository? Please contact me at [${data.email}](mailto:${data.email}). View more of my work in GitHub at [${data.username}](https://github.com/${data.username}) 
+`;
+}
+
+module.exports = generateMarkdown;
