@@ -73,7 +73,7 @@ const writeToFile = (fileName, data) => {
 // function to initialize program
 const init = async () => {
     try {
-        console.log("Welcome to the README generator.\nPlease answer the following questions:")
+        console.log("Welcome to the README generator. Please answer the following questions:")
 
         // ask user for answers to questions
         const answers = await promptUser();
